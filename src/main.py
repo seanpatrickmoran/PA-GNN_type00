@@ -14,6 +14,18 @@ if not os.path.isdir('results'):
     os.mkdir('results')
 # args
 
+"""
+
+IN: 1) edgelist from hiC or MicroC contacts that have been preprocessed.
+    2) training labels that have been determined by using tadcaller domains.
+
+OUT: "{dataset}_outANDdata.pkl", list object holding both the output, higher-dim embedding
+     and the pytorch geometric data object (data=Data(...)) in a pickle object as [out, data].
+
+
+
+"""
+
 def args():
     pass
 
