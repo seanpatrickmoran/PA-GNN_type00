@@ -21,13 +21,9 @@ args.comment = '0'
 args.task = 'link'
 args.model = 'PGNN'
 args.gpu = 'store_true'
-#args.dataset = "communities"
 
-#../staging/edge_gt20_C8_microC_1Mto1100K.txt 
-#../thresholding/gt20_labels.txt
-
-args.dataset = sys.argv[1]#"/home/spmoran/temp_spmoran/torch2/microC_pilot_redux/single_redux/staging/edge_gt20_C8_microC_1Mto1100K.txt"
-args.labelpath = sys.argv[2]#'/home/spmoran/temp_spmoran/torch2/microC_pilot_redux/single_redux/thresholding/gt20_labels.txt'
+args.dataset = sys.argv[1]  #"/home/spmoran/temp_spmoran/torch2/microC_pilot_redux/single_redux/staging/edge_gt20_C8_microC_1Mto1100K.txt"
+args.labelpath = sys.argv[2]  #'/home/spmoran/temp_spmoran/torch2/microC_pilot_redux/single_redux/thresholding/gt20_labels.txt'
 args.cache = 'store_false'
 args.cuda = '0'
 
@@ -90,11 +86,6 @@ dataset_name = args.dataset
 name_frag=dataset_name.split('/')[-1].split('.txt')[0]
 
 results = []
-# out_embeddings = dict()
-# data_embeddings = dict()
-# init_data = dict()
-
-# for repeat in range(args.repeat_num):
 result_val = []
 result_test = []
 
