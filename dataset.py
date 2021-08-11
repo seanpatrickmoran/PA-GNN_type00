@@ -26,7 +26,13 @@ from torch_geometric.data import Data, DataLoader
 
 from utils import precompute_dist_data, get_link_mask, duplicate_edges, deduplicate_edges
 
-
+###
+#
+#  Adapted from Jiyuan You https://github.com/JiaxuanYou/P-GNN
+#
+#
+#
+###
 def get_tg_dataset(args, dataset_name, use_cache=True, remove_feature=False):
     print('access')
     try:
@@ -47,11 +53,6 @@ def get_tg_dataset(args, dataset_name, use_cache=True, remove_feature=False):
     f3_name = 'datasets/cache/' + dataset_name + str(-1)+ '_links_train.dat'
     f4_name = 'datasets/cache/' + dataset_name + str(-1)+ '_links_val.dat'
     f5_name = 'datasets/cache/' + dataset_name + str(-1)+ '_links_test.dat'
-
-
-    ##test
-    # use_cache=True
-    # remove_feature=False
 
     if use_cache and ((os.path.isfile(f2_name) and args.task=='link') or (os.path.isfile(f1_name) and args.task!='link')):
         with open(f3_name, 'rb') as f3, \
@@ -223,12 +224,6 @@ def load_graphs(dataset_str, labelpath):
             assert label_dict[edge[0]]
         except KeyError:
             hh.remove_node(edge[0])
-#
-    # comps = [comp for comp in nx.connected_components(hh) if len(comp)>10] ##fix this
-    # graphs = [hh.subgraph(comp) for comp in comps]
-#
-    # edge_labels = []
-    # feature = []
 #
     n = hh.number_of_nodes()
     #former features
