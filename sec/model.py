@@ -1,5 +1,13 @@
 #! /usr/bin/env python3
 
+###
+#
+# Adapted from Jiaxuan You's https://github.com/JiaxuanYou/P-GNN
+#
+#
+#
+###
+
 import torch
 import torch.nn as nn
 import torch_geometric as tg
