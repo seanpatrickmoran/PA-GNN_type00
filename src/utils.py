@@ -182,29 +182,7 @@ def precompute_dist_data(edge_index, num_nodes, approximate=0):
                     # dists_array[i, j] = 1 / (dist + 1)
                     dists_array[node_i, node_j] = 1 / (dist + 1)
         return dists_array
-
-
-###
-###
-###
-###
-###
-def iii_get_random_anchorset(n,c=0.5):
-    m = int(np.log2(n))
-    copy = int(c*m)
-    anchorset_id = []
-    for i in range(m):
-        anchor_size = int(n/np.exp2(i + 1))
-        for j in range(copy):
-            anchorset_id.append(np.random.choice(n,size=anchor_size,replace=False))
-    return anchorset_id
-
-def get_predetermined_anchorset():
-    # it may be different every time.
-    return [5, 19, 109, 248, 342, 389, 428, 427, 448, 492, 607, 824]
-
-
-
+    
 def get_random_anchorset(n,c=0.5):
     m = int(np.log2(n))
     copy = int(c*m)
@@ -214,8 +192,6 @@ def get_random_anchorset(n,c=0.5):
         for j in range(copy):
             anchorset_id.append(np.random.choice(n,size=anchor_size,replace=False))
     return anchorset_id
-
-
 
 def get_dist_max(anchorset_id, dist, device):
     dist_max = torch.zeros((dist.shape[0],len(anchorset_id))).to(device)
@@ -228,10 +204,7 @@ def get_dist_max(anchorset_id, dist, device):
         dist_argmax[:,i] = temp_id[dist_argmax_temp]
     return dist_max, dist_argmax
 
-
-
 def preselect_anchor(data, layer_num=1, anchor_num=32, anchor_size_num=4, device='cpu'):
-
     data.anchor_size_num = anchor_size_num
     data.anchor_set = []
     anchor_num_per_size = anchor_num//anchor_size_num
@@ -240,32 +213,5 @@ def preselect_anchor(data, layer_num=1, anchor_num=32, anchor_size_num=4, device
         anchors = np.random.choice(data.num_nodes, size=(layer_num,anchor_num_per_size,anchor_size), replace=True)
         data.anchor_set.append(anchors)
     data.anchor_set_indicator = np.zeros((layer_num, anchor_num, data.num_nodes), dtype=int)
-
-    anchorset_id = get_random_anchorset(data.num_nodes,c=1)
-    data.dists_max, data.dists_argmax = get_dist_max(anchorset_id, data.dists, device)
-
-
-###
-###
-###
-###
-###
-def iii_preselect_anchor(data, layer_num=1, anchor_num=32, anchor_size_num=4, device='cpu'):
-    # make anchor_preselect match our number of communitites (12)
-    anchor_CTR = 256
-    for an in [12,24,36,48]:
-        if abs(an - anchor_num) < anchor_CTR:
-            anchor_CTR = an
-    anchor_num = anchor_CTR
-
-    data.anchor_size_num = anchor_size_num
-    data.anchor_set = []
-    anchor_num_per_size = anchor_num//anchor_size_num
-    for i in range(anchor_size_num):
-        anchor_size = 2**(i+1)-1
-    #    anchors = np.random.choice(data.num_nodes, size=(layer_num,anchor_num_per_size,anchor_size), replace=True)
-        data.anchor_set.append(anchors)
-    data.anchor_set_indicator = np.zeros((layer_num, anchor_num, data.num_nodes), dtype=int)
-
     anchorset_id = get_random_anchorset(data.num_nodes,c=1)
     data.dists_max, data.dists_argmax = get_dist_max(anchorset_id, data.dists, device)
