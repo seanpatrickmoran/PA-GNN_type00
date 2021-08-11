@@ -192,17 +192,18 @@ def load_graphs(dataset_str, labelpath):
     idx_test = [None]
 #
     # elif dataset_str == 'email':
-    dataset_str='../staging/edge_gt20_C8_microC_1Mto1100K.txt'
+#     dataset_str='../staging/edge_gt20_C8_microC_1Mto1100K.txt'
     with open(dataset_str, 'rb') as f:
         hh = nx.read_edgelist(f)
 #
+#     print(hh.number_of_nodes())
     # with open('/home/spmoran/temp_spmoran/torch2/test_chr8/edgeonlyCHR8_1MBto2MB.txt', 'rb') as f:
     #     hh = nx.read_edgelist(f)
     # with open('/home/spmoran/temp_spmoran/torch2/old.P-GNN/data/email.txt', 'rb') as f:
     #     hh = nx.read_edgelist(f)
 #
-    # label_all = np.loadtxt(labelpath)
-    label_all = np.loadtxt('../thresholding/gt20_labels.txt')
+    label_all = np.loadtxt(labelpath)
+#     label_all = np.loadtxt('../thresholding/gt20_labels.txt')
     #label_all = np.loadtxt('/home/spmoran/temp_spmoran/torch2/chr8v1/staging/graph_labels.txt')
 #
     graph_label_all = label_all.copy()
@@ -213,12 +214,14 @@ def load_graphs(dataset_str, labelpath):
         key = str(u).split(".")[0]
         label_dict[key] = v
 #
-    for u in hh.nodes():
+    for u in hh.copy().nodes():
+#         print(type(u),type(list(label_dict.keys())[0]))
         if u not in label_dict:
             hh.remove_node(u)
             print(f"removed node: {u}")
             continue
 #
+#     print(hh.number_of_nodes())
     for edge in list(hh.edges()):
         try:
             assert label_dict[edge[0]]
