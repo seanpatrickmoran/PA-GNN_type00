@@ -79,7 +79,7 @@ func readTADBoundaries(filename string, nodes []int) ([]int, []int, int) {
                     // community_ids = append(community_ids, 0)
                     continue
                 default:
-                    fmt.Printf("error\n")
+                    continue
             }
         }
     }
@@ -92,8 +92,6 @@ func writeTADCenters(tadbank []int, communityIds []int, nodes []int) (map[int]in
     for i := 0; i<len(nodes); i++ {
         tadDict[nodes[i]] = communityIds[i]
     }
-
-    fmt.Println(tadDict)
 
     var centers []int
     for i := 0; i<len(tadbank)+1; i++ {
@@ -121,7 +119,7 @@ func main() {
     // start := time.Now()
     nodes := readEdgeList(os.Args[1])
     tadbank, communityids, _ := readTADBoundaries(os.Args[2],nodes)
-    taddict, centers := (writeTADCenters(tadbank, communityids, nodes))
+    taddict, centers := writeTADCenters(tadbank, communityids, nodes)
 
     for i := 0; i<len(nodes); i++ {
         // Block{
